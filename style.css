@@ -1,0 +1,1305 @@
+/* ==========================================================
+   Тема: ночное небо + Hello Kitty + стеклянные полароиды
+   ========================================================== */
+
+:root {
+  --bg-outer: #10132a;
+  --frame-bg: linear-gradient(180deg, #1c2146 0%, #262651 40%, #2c2456 75%, #221d47 100%);
+  --coral: #ef6b78;
+  --pink: #ffb3c1;
+  --gold: #ffd36b;
+  --text: #ffffff;
+  --text-soft: #cfd4ee;
+  --text-muted: #9aa1c7;
+  --glass: rgba(255, 255, 255, 0.12);
+  --glass-strong: rgba(255, 255, 255, 0.18);
+  --glass-border: rgba(255, 255, 255, 0.28);
+  --font: 'Nunito', sans-serif;
+  --font-hand: 'Caveat', cursive;
+}
+
+* { margin: 0; padding: 0; box-sizing: border-box; -webkit-tap-highlight-color: transparent; }
+html { scroll-behavior: smooth; }
+
+body {
+  background: var(--bg-outer);
+  color: var(--text);
+  font-family: var(--font);
+  min-height: 100vh;
+  overflow-x: hidden;
+}
+
+.coral { color: var(--coral); }
+
+/* ================= РАМКА СТРАНИЦЫ ================= */
+.page-wrap {
+  position: relative;
+  max-width: 1080px;
+  margin: 70px auto 40px;
+  padding: 0 16px;
+}
+
+.page-frame {
+  position: relative;
+  z-index: 1;
+  background: var(--frame-bg);
+  border: 1px solid rgba(255, 255, 255, 0.14);
+  border-radius: 26px;
+  box-shadow: 0 30px 80px rgba(0, 0, 0, 0.55);
+  padding: 18px 28px 10px;
+}
+
+/* Kitty выглядывает из-за верхнего края рамки */
+.peek-kitty {
+  position: absolute;
+  top: -52px;
+  right: 60px;
+  width: 96px;
+  z-index: 0;
+  animation: peek 4s ease-in-out infinite;
+}
+.peek-kitty svg { width: 100%; display: block; }
+
+.peek-paws {
+  position: absolute;
+  top: -7px;
+  right: 74px;
+  width: 68px;
+  display: flex;
+  justify-content: space-between;
+  z-index: 2;
+  animation: peek 4s ease-in-out infinite;
+}
+.peek-paws span {
+  width: 20px;
+  height: 13px;
+  background: #fff;
+  border: 2.5px solid #2a2a3a;
+  border-radius: 50%;
+}
+
+@keyframes peek {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(-5px); }
+}
+
+/* ================= ФОНОВЫЙ ДЕКОР ================= */
+#decor-layer {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  z-index: 0;
+}
+
+.decor {
+  position: absolute;
+  animation: twinkle ease-in-out infinite;
+}
+.decor svg { width: 100%; height: 100%; display: block; }
+
+.decor-dot {
+  position: absolute;
+  border-radius: 50%;
+  background: #fff;
+  animation: twinkle ease-in-out infinite;
+}
+
+@keyframes twinkle {
+  0%, 100% { opacity: 0.25; transform: scale(0.9); }
+  50% { opacity: 0.85; transform: scale(1.1); }
+}
+
+.page-frame > *:not(#decor-layer) { position: relative; z-index: 1; }
+
+/* ================= НАВИГАЦИЯ ================= */
+.nav-bar {
+  position: sticky !important;
+  top: 10px;
+  z-index: 50 !important;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  padding: 10px 6px;
+}
+
+.nav-bar.scrolled {
+  background: rgba(28, 32, 70, 0.8);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  border-radius: 22px;
+  padding: 10px 16px;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.35);
+}
+
+.nav-logo {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  color: var(--text);
+  text-decoration: none;
+  font-weight: 800;
+  font-size: 1rem;
+}
+.nav-bow { width: 30px; height: 21px; }
+
+.nav-links {
+  display: flex;
+  gap: 4px;
+  background: rgba(255, 255, 255, 0.1);
+  border: 1px solid rgba(255, 255, 255, 0.18);
+  padding: 4px;
+  border-radius: 20px;
+}
+
+.nav-pill {
+  color: var(--text-soft);
+  text-decoration: none;
+  font-size: 0.85rem;
+  font-weight: 700;
+  padding: 6px 14px;
+  border-radius: 16px;
+  transition: background 0.2s, color 0.2s;
+}
+.nav-pill:hover, .nav-pill.active { background: rgba(255, 255, 255, 0.16); color: #fff; }
+
+.nav-cta {
+  text-align: center;
+  font-size: 0.75rem;
+  font-weight: 700;
+  line-height: 1.2;
+  color: #fff;
+  text-decoration: none;
+  padding: 8px 16px;
+  border-radius: 18px;
+  background: rgba(255, 255, 255, 0.14);
+  border: 1px solid rgba(255, 255, 255, 0.25);
+  transition: background 0.2s;
+}
+.nav-cta:hover { background: rgba(255, 255, 255, 0.24); }
+
+/* ================= HERO ================= */
+.hero {
+  display: grid;
+  grid-template-columns: 1fr 1.1fr;
+  align-items: center;
+  gap: 20px;
+  padding: 40px 0 10px;
+}
+
+.since {
+  color: var(--text-soft);
+  font-weight: 600;
+  font-size: 0.95rem;
+  margin-bottom: 8px;
+}
+
+.hero-title {
+  font-size: clamp(2.6rem, 6.5vw, 4.4rem);
+  font-weight: 900;
+  line-height: 1.05;
+  letter-spacing: -1px;
+  margin-bottom: 14px;
+}
+.hero-title .coral { text-shadow: 0 0 30px rgba(239, 107, 120, 0.45); }
+
+.couple-name {
+  font-size: clamp(1.3rem, 3.4vw, 1.7rem);
+  font-weight: 800;
+  margin-bottom: 10px;
+}
+.couple-name span { color: var(--pink); font-weight: 600; font-size: 0.75em; }
+
+.hero-desc {
+  color: var(--text-soft);
+  font-size: 1rem;
+  line-height: 1.6;
+  max-width: 420px;
+  margin-bottom: 24px;
+}
+
+.btn-coral {
+  display: inline-block;
+  background: linear-gradient(135deg, #f07581, #d9485a);
+  color: #fff;
+  text-decoration: none;
+  font-weight: 800;
+  font-size: 0.95rem;
+  padding: 11px 26px;
+  border-radius: 24px;
+  border: 1px solid rgba(255, 255, 255, 0.3);
+  box-shadow: 0 0 0 4px rgba(239, 107, 120, 0.18), 0 8px 24px rgba(239, 107, 120, 0.45);
+  transition: transform 0.2s, box-shadow 0.2s;
+}
+.btn-coral:hover { transform: translateY(-2px); box-shadow: 0 0 0 5px rgba(239, 107, 120, 0.25), 0 12px 28px rgba(239, 107, 120, 0.6); }
+
+/* ================= HERO АРКА С ПАРОЙ В ФУНИКУЛЁРЕ (ТОЧНО КАК НА РЕФЕРЕНСЕ) ================= */
+.hero-arch-container {
+  position: relative;
+  width: 100%;
+  max-width: 420px;
+  margin: 0 auto;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.hero-arch-glow {
+  position: absolute;
+  inset: -15px;
+  background: radial-gradient(circle at 50% 50%, rgba(239, 107, 120, 0.35), transparent 70%);
+  pointer-events: none;
+  z-index: 0;
+  border-radius: 50%;
+}
+
+.hero-arch-window {
+  position: relative;
+  z-index: 2;
+  width: 100%;
+  aspect-ratio: 1 / 1.05;
+  border-radius: 200px 200px 40px 40px; /* Фирменная форма арки с полукруглым верхом */
+  overflow: hidden;
+  border: 4px solid rgba(255, 255, 255, 0.28);
+  box-shadow: 0 25px 60px rgba(0, 0, 0, 0.6), 0 0 30px rgba(239, 107, 120, 0.3);
+  background: #181d38;
+  transition: transform 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+}
+
+.hero-arch-window:hover {
+  transform: scale(1.03);
+}
+
+.hero-arch-window img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: center;
+  display: block;
+}
+
+/* Фигурки Hello Kitty, сидящие на углах арки */
+.arch-kitty-sticker {
+  position: absolute;
+  bottom: 0px;
+  width: 72px;
+  z-index: 5;
+  filter: drop-shadow(0 6px 15px rgba(0, 0, 0, 0.5));
+  animation: kittyWiggle 3.5s ease-in-out infinite;
+}
+
+.arch-kitty-sticker.kitty-left {
+  left: -18px;
+  transform: rotate(-10deg);
+}
+
+.arch-kitty-sticker.kitty-right {
+  right: -18px;
+  transform: rotate(10deg);
+  animation-delay: 0.6s;
+}
+
+@keyframes kittyWiggle {
+  0%, 100% { transform: translateY(0) rotate(var(--krot, 0deg)); }
+  50% { transform: translateY(-5px) rotate(var(--krot, 0deg)); }
+}
+
+.arch-kitty-sticker.kitty-left { --krot: -10deg; }
+.arch-kitty-sticker.kitty-right { --krot: 10deg; }
+
+/* ================= СЧЁТЧИК ================= */
+.counter {
+  margin: 30px auto 0;
+  max-width: 620px;
+  text-align: center;
+  background: var(--glass);
+  border: 1px solid var(--glass-border);
+  backdrop-filter: blur(14px);
+  -webkit-backdrop-filter: blur(14px);
+  border-radius: 22px;
+  padding: 22px 16px;
+  box-shadow: 0 15px 40px rgba(0, 0, 0, 0.3);
+}
+
+.counter-label {
+  text-transform: uppercase;
+  letter-spacing: 2px;
+  font-size: 0.8rem;
+  font-weight: 800;
+  color: var(--pink);
+  margin-bottom: 12px;
+}
+
+.timer { display: flex; justify-content: center; align-items: flex-start; gap: 10px; }
+.t-item { display: flex; flex-direction: column; align-items: center; min-width: 58px; }
+.t-num {
+  font-size: clamp(1.8rem, 6vw, 2.7rem);
+  font-weight: 900;
+  line-height: 1;
+  font-variant-numeric: tabular-nums;
+}
+.t-unit { font-size: 0.78rem; color: var(--text-soft); margin-top: 6px; font-weight: 600; }
+.t-sep { font-size: 1.8rem; color: var(--pink); opacity: 0.7; line-height: 1; }
+.counter-note { margin-top: 12px; font-size: 0.85rem; color: var(--text-muted); }
+
+/* ================= CAPTURED MOMENTS ================= */
+.moments { padding: 70px 0 20px; }
+
+.section-title {
+  text-align: center;
+  font-size: clamp(2rem, 5.5vw, 2.8rem);
+  font-weight: 900;
+  color: var(--pink);
+  text-shadow: 0 0 25px rgba(255, 140, 160, 0.35);
+}
+.section-sub { text-align: center; color: var(--text-soft); margin: 6px 0 40px; }
+
+.moments-grid {
+  display: grid;
+  grid-template-columns: repeat(6, 1fr);
+  gap: 26px;
+}
+
+/* ================= СОВРЕМЕННЫЕ ПЛАВНЫЕ АНИМАЦИИ ПРИ СКРОЛЛЕ ================= */
+.scroll-reveal {
+  opacity: 0;
+  transform: translateY(45px) scale(0.96);
+  filter: blur(8px);
+  transition: opacity 0.85s cubic-bezier(0.16, 1, 0.3, 1),
+              transform 0.85s cubic-bezier(0.16, 1, 0.3, 1),
+              filter 0.85s cubic-bezier(0.16, 1, 0.3, 1);
+  will-change: opacity, transform, filter;
+}
+
+.scroll-reveal.revealed {
+  opacity: 1;
+  transform: translateY(0) scale(1);
+  filter: blur(0px);
+}
+
+.card {
+  position: relative;
+  background: var(--glass);
+  border: 1px solid var(--glass-border);
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+  border-radius: 14px;
+  padding: 14px 14px 18px;
+  box-shadow: 0 15px 35px rgba(0, 0, 0, 0.35), inset 0 1px 0 rgba(255, 255, 255, 0.25);
+  cursor: pointer;
+  opacity: 0;
+  transform: translateY(50px) scale(0.94) rotate(var(--rot, 0deg));
+  filter: blur(8px);
+  transition: opacity 0.9s cubic-bezier(0.16, 1, 0.3, 1),
+              transform 0.9s cubic-bezier(0.16, 1, 0.3, 1),
+              filter 0.9s cubic-bezier(0.16, 1, 0.3, 1),
+              box-shadow 0.35s ease;
+  will-change: opacity, transform, filter;
+}
+
+.card.visible {
+  opacity: 1;
+  transform: translateY(0) scale(1) rotate(var(--rot, 0deg));
+  filter: blur(0px);
+}
+
+.card.visible:hover {
+  transform: translateY(-8px) scale(1.02) rotate(0deg);
+  box-shadow: 0 25px 50px rgba(0, 0, 0, 0.5), 0 0 35px rgba(255, 140, 160, 0.4);
+}
+
+.card-big { grid-column: span 3; }
+.card-small { grid-column: span 2; }
+
+/* Белый стикер-ярлык на первой карточке */
+.card-label {
+  position: absolute;
+  top: -14px;
+  left: 30px;
+  z-index: 3;
+  background: #f4f6ff;
+  color: #2a2f5a;
+  font-family: var(--font-hand);
+  font-size: 1.25rem;
+  font-weight: 700;
+  padding: 2px 14px;
+  border-radius: 4px;
+  transform: rotate(-3deg);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
+}
+.card-label::before, .card-label::after {
+  content: '';
+  position: absolute;
+  top: 50%;
+  width: 10px;
+  height: 100%;
+  background: #f4f6ff;
+  transform: translateY(-50%);
+  clip-path: polygon(0 0, 100% 0, 100% 100%, 0 100%, 50% 50%);
+}
+.card-label::before { left: -9px; }
+.card-label::after { right: -9px; transform: translateY(-50%) scaleX(-1); }
+
+/* Бантик в углу карточки */
+.card-bow {
+  position: absolute;
+  top: -12px;
+  right: -10px;
+  width: 40px;
+  height: 28px;
+  z-index: 3;
+  transform: rotate(18deg);
+  filter: drop-shadow(0 3px 5px rgba(0, 0, 0, 0.35));
+}
+
+.card-title-top {
+  text-align: center;
+  font-weight: 800;
+  font-size: 1.05rem;
+  margin-bottom: 10px;
+}
+
+.photo {
+  position: relative;
+  width: 100%;
+  aspect-ratio: 4 / 3.4;
+  border-radius: 6px;
+  overflow: hidden;
+  background: rgba(255, 255, 255, 0.95);
+  padding: 6px;
+}
+.card-small .photo { aspect-ratio: 1 / 1.15; }
+
+.photo img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+  border-radius: 3px;
+  transition: transform 0.5s ease;
+}
+.card:hover .photo > img { transform: scale(1.04); }
+
+/* Мини-превью дополнительного фото (футболка на концерте) */
+.photo-extra-thumb {
+  position: absolute;
+  bottom: 10px;
+  right: 10px;
+  width: 54px;
+  height: 54px;
+  border-radius: 6px;
+  overflow: hidden;
+  border: 2px solid #ffffff;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.4);
+  cursor: pointer;
+  background: #000;
+  transition: transform 0.2s, box-shadow 0.2s;
+  z-index: 4;
+}
+.photo-extra-thumb:hover {
+  transform: scale(1.15);
+  box-shadow: 0 6px 16px rgba(239, 107, 120, 0.6);
+}
+.photo-extra-thumb img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+.thumb-badge {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  background: rgba(0, 0, 0, 0.7);
+  color: #fff;
+  font-size: 0.58rem;
+  font-weight: 700;
+  text-align: center;
+  padding: 1px 0;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+/* Заглушка: Hello Kitty вместо фото */
+.photo.empty {
+  background: linear-gradient(160deg, rgba(255, 255, 255, 0.16), rgba(255, 170, 190, 0.12));
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  padding: 16px;
+  border: 1px dashed rgba(255, 255, 255, 0.3);
+}
+.photo.empty svg { width: 42%; max-width: 110px; height: auto; animation: bob 3s ease-in-out infinite; }
+.photo.empty span { font-size: 0.8rem; color: var(--text-soft); font-weight: 700; text-align: center; }
+
+@keyframes bob {
+  0%, 100% { transform: translateY(0) rotate(-3deg); }
+  50% { transform: translateY(-6px) rotate(3deg); }
+}
+
+.card-caption { text-align: center; margin-top: 12px; }
+.card-caption .hand {
+  font-family: var(--font-hand);
+  font-size: 1.65rem;
+  font-weight: 700;
+  line-height: 1.1;
+}
+.card-date {
+  display: block;
+  color: var(--gold);
+  font-size: 0.78rem;
+  font-weight: 800;
+  letter-spacing: 1px;
+  text-transform: uppercase;
+  margin-top: 4px;
+}
+.card-desc { color: var(--text-soft); font-size: 0.86rem; line-height: 1.5; margin-top: 6px; }
+
+/* ================= РЕДАКТИРОВАНИЕ И ДОБАВЛЕНИЕ СОБЫТИЙ ================= */
+.moments-header-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 30px;
+  flex-wrap: wrap;
+  gap: 16px;
+}
+
+.add-moment-btn {
+  font-size: 0.88rem;
+  padding: 8px 20px;
+}
+
+@media (max-width: 650px) {
+  .moments-header-row {
+    flex-direction: column;
+    text-align: center;
+  }
+}
+
+.card-edit-btn {
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  width: 30px;
+  height: 30px;
+  border-radius: 50%;
+  background: rgba(20, 24, 48, 0.85);
+  border: 1px solid rgba(255, 255, 255, 0.3);
+  color: #fff;
+  font-size: 13px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  z-index: 6;
+  opacity: 0.7;
+  transition: opacity 0.2s, transform 0.2s, background 0.2s;
+}
+
+.card-edit-btn:hover {
+  opacity: 1;
+  transform: scale(1.15);
+  background: var(--coral);
+}
+
+/* Модальное окно формы редактирования */
+.modal-edit-box {
+  max-width: 500px;
+  text-align: left;
+  background: #1c2146;
+  padding: 24px 22px;
+}
+
+.edit-modal-heading {
+  font-size: 1.4rem;
+  font-weight: 800;
+  color: var(--pink);
+  margin-bottom: 18px;
+  text-align: center;
+}
+
+.event-form-grid {
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+}
+
+.form-field {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.form-field label {
+  font-size: 0.82rem;
+  font-weight: 700;
+  color: var(--text-soft);
+}
+
+.form-field input[type="text"],
+.form-field textarea {
+  background: rgba(10, 12, 28, 0.7);
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  border-radius: 10px;
+  padding: 10px 14px;
+  color: #fff;
+  font-family: var(--font);
+  font-size: 0.9rem;
+  outline: none;
+  transition: border-color 0.2s;
+}
+
+.form-field input[type="text"]:focus,
+.form-field textarea:focus {
+  border-color: var(--coral);
+}
+
+.form-field input[type="file"] {
+  font-size: 0.8rem;
+  color: var(--text-soft);
+}
+
+.field-hint {
+  font-size: 0.72rem;
+  color: var(--text-muted);
+}
+
+.form-actions-row {
+  display: flex;
+  justify-content: flex-end;
+  align-items: center;
+  gap: 12px;
+  margin-top: 10px;
+}
+
+.btn-delete-event {
+  background: none;
+  border: 1px solid rgba(239, 107, 120, 0.4);
+  color: var(--coral);
+  padding: 8px 16px;
+  border-radius: 20px;
+  font-size: 0.85rem;
+  font-weight: 700;
+  cursor: pointer;
+  transition: all 0.2s;
+}
+
+.btn-delete-event:hover {
+  background: rgba(239, 107, 120, 0.2);
+}
+.interactive-section {
+  padding: 60px 0 20px;
+}
+
+.wish-board-card, .wishlist-glass-card {
+  max-width: 720px;
+  margin: 0 auto;
+  background: var(--glass);
+  border: 1px solid var(--glass-border);
+  backdrop-filter: blur(14px);
+  -webkit-backdrop-filter: blur(14px);
+  border-radius: 24px;
+  padding: 26px 22px;
+  box-shadow: 0 15px 40px rgba(0, 0, 0, 0.35);
+}
+
+/* Форма добавления записок */
+.wish-input-form {
+  margin-bottom: 25px;
+  background: rgba(255, 255, 255, 0.06);
+  border: 1px solid rgba(255, 255, 255, 0.15);
+  border-radius: 18px;
+  padding: 16px;
+}
+
+.author-selector {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  margin-bottom: 12px;
+}
+
+.selector-label {
+  font-size: 0.85rem;
+  color: var(--text-soft);
+  font-weight: 700;
+}
+
+.author-radio input {
+  display: none;
+}
+
+.radio-pill {
+  display: inline-block;
+  padding: 5px 16px;
+  border-radius: 16px;
+  background: rgba(255, 255, 255, 0.1);
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  color: var(--text-soft);
+  font-size: 0.82rem;
+  font-weight: 700;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.author-radio input:checked + .radio-pill {
+  background: linear-gradient(135deg, var(--coral), #d9485a);
+  color: #fff;
+  border-color: rgba(255, 255, 255, 0.4);
+  box-shadow: 0 4px 12px rgba(239, 107, 120, 0.4);
+}
+
+.wish-input-group {
+  display: flex;
+  gap: 10px;
+}
+
+@media (max-width: 580px) {
+  .wish-input-group {
+    flex-direction: column;
+  }
+}
+
+.wish-input-group textarea, .wishlist-add-form input {
+  flex: 1;
+  background: rgba(16, 19, 42, 0.7);
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  border-radius: 14px;
+  padding: 12px 16px;
+  color: #fff;
+  font-family: var(--font);
+  font-size: 0.95rem;
+  resize: none;
+  outline: none;
+  transition: border-color 0.2s;
+}
+
+.wish-input-group textarea:focus, .wishlist-add-form input:focus {
+  border-color: var(--pink);
+}
+
+.send-wish-btn {
+  align-self: flex-end;
+  white-space: nowrap;
+}
+
+/* Сетка записок-стикеров */
+.wishes-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+  gap: 16px;
+}
+
+.wish-note-item {
+  position: relative;
+  background: rgba(255, 255, 255, 0.08);
+  border: 1px solid rgba(255, 255, 255, 0.18);
+  border-radius: 16px;
+  padding: 16px;
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.25);
+  transition: transform 0.2s ease;
+}
+
+.wish-note-item:hover {
+  transform: translateY(-3px);
+  border-color: rgba(255, 255, 255, 0.35);
+}
+
+.wish-note-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 8px;
+}
+
+.wish-note-author {
+  font-weight: 800;
+  font-size: 0.88rem;
+  color: var(--pink);
+}
+
+.wish-note-date {
+  font-size: 0.75rem;
+  color: var(--text-muted);
+}
+
+.wish-note-body {
+  font-size: 0.95rem;
+  line-height: 1.5;
+  color: var(--text-soft);
+  word-break: break-word;
+}
+
+.delete-wish-btn {
+  background: none;
+  border: none;
+  color: var(--text-muted);
+  font-size: 1.1rem;
+  cursor: pointer;
+  padding: 0 4px;
+  transition: color 0.2s;
+}
+
+.delete-wish-btn:hover {
+  color: var(--coral);
+}
+
+/* ================= ВИШЛИСТ С ЧЕКБОКСАМИ ================= */
+.wishlist-add-form {
+  display: flex;
+  gap: 10px;
+  margin-bottom: 20px;
+}
+
+.wishlist-list {
+  list-style: none;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.wishlist-item {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  background: rgba(255, 255, 255, 0.06);
+  border: 1px solid rgba(255, 255, 255, 0.14);
+  padding: 12px 16px;
+  border-radius: 14px;
+  transition: all 0.2s ease;
+}
+
+.wishlist-item:hover {
+  background: rgba(255, 255, 255, 0.1);
+}
+
+.wishlist-item-left {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  cursor: pointer;
+  flex: 1;
+}
+
+.custom-checkbox {
+  width: 22px;
+  height: 22px;
+  border-radius: 6px;
+  border: 2px solid var(--pink);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: all 0.2s ease;
+  flex-shrink: 0;
+}
+
+.wishlist-item.completed .custom-checkbox {
+  background: var(--coral);
+  border-color: var(--coral);
+}
+
+.wishlist-item.completed .custom-checkbox::after {
+  content: '✓';
+  color: #fff;
+  font-size: 14px;
+  font-weight: 900;
+}
+
+.wishlist-text {
+  font-size: 0.98rem;
+  color: var(--text);
+  transition: all 0.2s ease;
+}
+
+.wishlist-item.completed .wishlist-text {
+  text-decoration: line-through;
+  color: var(--text-muted);
+  opacity: 0.7;
+}
+
+.delete-wishlist-btn {
+  background: none;
+  border: none;
+  color: var(--text-muted);
+  font-size: 1.2rem;
+  cursor: pointer;
+  padding: 2px 6px;
+  transition: color 0.2s;
+}
+
+.delete-wishlist-btn:hover {
+  color: var(--coral);
+}
+
+/* ================= ВПЕРЕДИ ================= */
+.future-card {
+  margin: 40px auto 0;
+  max-width: 420px;
+  text-align: center;
+  background: var(--glass);
+  border: 1px solid var(--glass-border);
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+  border-radius: 14px;
+  padding: 24px 20px;
+  box-shadow: 0 15px 35px rgba(0, 0, 0, 0.35);
+}
+.future-kitties { display: flex; justify-content: center; gap: 6px; margin-bottom: 10px; }
+.future-kitties svg { width: 78px; height: auto; animation: bob 3.2s ease-in-out infinite; }
+.future-kitties svg:last-child { animation-delay: 0.6s; }
+.future-text { font-weight: 800; font-size: 1.25rem; line-height: 1.3; }
+
+/* ================= ПОСЛАНИЕ ================= */
+.letter { max-width: 640px; margin: 70px auto 50px; }
+.letter-card {
+  position: relative;
+  text-align: center;
+  background: var(--glass);
+  border: 1px solid var(--glass-border);
+  backdrop-filter: blur(14px);
+  -webkit-backdrop-filter: blur(14px);
+  border-radius: 22px;
+  padding: 40px 28px 32px;
+  box-shadow: 0 20px 45px rgba(0, 0, 0, 0.4);
+}
+.letter-bow {
+  position: absolute;
+  top: -18px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 52px;
+  height: 36px;
+  filter: drop-shadow(0 4px 8px rgba(0, 0, 0, 0.4));
+}
+.letter-title { font-size: clamp(1.5rem, 4vw, 2rem); font-weight: 900; color: var(--pink); margin-bottom: 14px; }
+.letter-body { color: var(--text-soft); font-size: 1.02rem; line-height: 1.75; margin-bottom: 18px; }
+.letter-sign { font-family: var(--font-hand); font-size: 1.9rem; font-weight: 700; color: var(--coral); }
+
+/* ================= ФУТЕР ================= */
+.footer {
+  text-align: center;
+  padding: 30px 0 34px;
+  border-top: 1px solid rgba(255, 255, 255, 0.08);
+  color: var(--text-muted);
+  font-size: 0.88rem;
+}
+.footer-kitty { width: 52px; height: auto; color: var(--pink); opacity: 0.8; margin-bottom: 8px; }
+.footer-copy { color: var(--pink); font-weight: 700; margin-top: 4px; }
+
+/* ================= КНОПКА МУЗЫКИ И ВИДЖЕТ ================= */
+.music-floating-widget {
+  position: fixed;
+  right: 22px;
+  bottom: 22px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 8px;
+  z-index: 100;
+}
+
+.music-volume-controls {
+  display: flex;
+  gap: 6px;
+  background: rgba(22, 26, 52, 0.85);
+  backdrop-filter: blur(8px);
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  padding: 4px;
+  border-radius: 20px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.35);
+}
+
+.music-mini-btn {
+  width: 28px;
+  height: 28px;
+  border-radius: 50%;
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  background: rgba(255, 255, 255, 0.12);
+  color: #fff;
+  font-size: 16px;
+  font-weight: 800;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  line-height: 1;
+}
+
+.music-mini-btn:hover {
+  background: var(--coral);
+  border-color: rgba(255, 255, 255, 0.4);
+  transform: scale(1.15);
+}
+
+.music-btn {
+  width: 52px;
+  height: 52px;
+  border-radius: 50%;
+  border: 1px solid rgba(255, 255, 255, 0.35);
+  background: linear-gradient(135deg, #f07581, #d9485a);
+  color: #fff;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  box-shadow: 0 8px 24px rgba(239, 107, 120, 0.5);
+  transition: transform 0.2s;
+}
+.music-btn:hover { transform: scale(1.08); }
+.music-btn.playing { animation: pulse 1.6s ease-in-out infinite; }
+@keyframes pulse { 0%, 100% { transform: scale(1); } 50% { transform: scale(1.12); } }
+
+.music-gear-btn {
+  width: 34px;
+  height: 34px;
+  border-radius: 50%;
+  border: 1px solid rgba(255, 255, 255, 0.25);
+  background: rgba(26, 30, 60, 0.85);
+  backdrop-filter: blur(8px);
+  color: #fff;
+  font-size: 14px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
+  transition: transform 0.2s, background 0.2s;
+  opacity: 0.8;
+}
+
+.music-gear-btn:hover {
+  opacity: 1;
+  transform: rotate(45deg) scale(1.1);
+  background: var(--coral);
+}
+
+/* ================= МОДАЛКА ================= */
+.modal {
+  position: fixed;
+  inset: 0;
+  z-index: 1000;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 20px;
+  opacity: 0;
+  visibility: hidden;
+  transition: opacity 0.3s, visibility 0.3s;
+}
+.modal.active { opacity: 1; visibility: visible; }
+.modal-backdrop { position: absolute; inset: 0; background: rgba(10, 12, 28, 0.85); backdrop-filter: blur(8px); }
+.modal-box {
+  position: relative;
+  max-width: 520px;
+  width: 100%;
+  background: #23264d;
+  border: 1px solid var(--glass-border);
+  border-radius: 20px;
+  padding: 14px 14px 20px;
+  text-align: center;
+  transform: scale(0.92);
+  transition: transform 0.3s;
+}
+.modal.active .modal-box { transform: scale(1); }
+.modal-close {
+  position: absolute;
+  top: -14px;
+  right: -14px;
+  width: 38px;
+  height: 38px;
+  border-radius: 50%;
+  border: 2px solid #fff;
+  background: var(--coral);
+  color: #fff;
+  font-size: 22px;
+  cursor: pointer;
+}
+#modal-img { width: 100%; max-height: 65vh; object-fit: contain; border-radius: 12px; display: block; }
+#modal-title { font-family: var(--font-hand); font-size: 1.8rem; margin-top: 10px; }
+#modal-caption { color: var(--text-soft); font-size: 0.92rem; }
+
+/* ================= АДАПТИВ ДЛЯ МОБИЛЬНЫХ УСТРОЙСТВ (SMARTPHONE FIRST) ================= */
+@media (max-width: 860px) {
+  .hero { 
+    grid-template-columns: 1fr; 
+    text-align: center; 
+    padding-top: 15px; 
+    gap: 25px;
+  }
+  .hero-desc { 
+    margin-left: auto; 
+    margin-right: auto; 
+    font-size: 0.95rem;
+  }
+  .hero-arch-container { 
+    max-width: 320px; 
+  }
+  .nav-links { 
+    display: none; /* Скрываем громоздкие ссылки в шапке на смартфонах */
+  }
+}
+
+@media (max-width: 600px) {
+  .page-wrap { 
+    margin-top: 45px; 
+    padding: 0 6px; 
+  }
+  .page-frame { 
+    padding: 10px 10px 15px; 
+    border-radius: 18px; 
+  }
+  
+  /* Hello Kitty выглядывает аккуратнее */
+  .peek-kitty { 
+    width: 65px; 
+    top: -36px; 
+    right: 20px; 
+  }
+  .peek-paws { 
+    right: 28px; 
+    width: 48px; 
+  }
+  .peek-paws span { 
+    width: 14px; 
+    height: 9px; 
+  }
+
+  /* Шапка */
+  .nav-bar {
+    padding: 6px 4px;
+    top: 6px;
+  }
+  .nav-logo span {
+    font-size: 0.95rem;
+  }
+  .nav-cta {
+    font-size: 0.72rem;
+    padding: 6px 12px;
+    border-radius: 14px;
+  }
+
+  /* Заголовки */
+  .hero-title {
+    font-size: clamp(2.1rem, 9vw, 2.8rem);
+    margin-bottom: 8px;
+  }
+  .couple-name {
+    font-size: 1.4rem;
+    margin-bottom: 8px;
+  }
+
+  /* Счётчик времени отношений */
+  .counter {
+    margin-top: 20px;
+    padding: 16px 8px;
+    border-radius: 18px;
+  }
+  .timer { 
+    gap: 3px; 
+  }
+  .t-item { 
+    min-width: 42px; 
+  }
+  .t-num { 
+    font-size: 1.55rem; 
+  }
+  .t-unit { 
+    font-size: 0.7rem; 
+  }
+  .t-sep { 
+    font-size: 1.2rem; 
+  }
+
+  /* Сетка воспоминаний: на телефоне все карточки идут красивой лентой в 1 колонку */
+  .moments {
+    padding: 40px 0 10px;
+  }
+  .moments-header-row {
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+    gap: 12px;
+    margin-bottom: 24px;
+  }
+  .moments-grid { 
+    grid-template-columns: 1fr !important;
+    gap: 22px; 
+  }
+  .card-big, .card-small { 
+    grid-column: span 1 !important; 
+    padding: 12px 12px 16px;
+    border-radius: 16px;
+  }
+  
+  .card-caption .hand { 
+    font-size: 1.45rem; 
+  }
+  .card-desc { 
+    font-size: 0.86rem; 
+    line-height: 1.45;
+  }
+  
+  /* Фото в карточках */
+  .photo {
+    aspect-ratio: 4 / 3.2 !important;
+  }
+  .card-small .photo {
+    aspect-ratio: 4 / 3.2 !important;
+  }
+
+  /* Пожелания и вишлист */
+  .wish-board-card, .wishlist-glass-card {
+    padding: 18px 14px;
+    border-radius: 18px;
+  }
+  .wishes-grid {
+    grid-template-columns: 1fr;
+    gap: 12px;
+  }
+  .wish-input-group {
+    flex-direction: column;
+  }
+  .send-wish-btn {
+    width: 100%;
+    text-align: center;
+  }
+  .wishlist-add-form {
+    flex-direction: column;
+  }
+  .wishlist-add-form button {
+    width: 100%;
+  }
+
+  /* Плавающий музыкальный виджет: не перекрывает контент на узких экранах */
+  .music-floating-widget {
+    right: 14px;
+    bottom: 14px;
+    gap: 6px;
+  }
+  .music-btn {
+    width: 46px;
+    height: 46px;
+  }
+  .music-mini-btn {
+    width: 26px;
+    height: 26px;
+    font-size: 14px;
+  }
+  .music-gear-btn {
+    width: 30px;
+    height: 30px;
+    font-size: 12px;
+  }
+
+  /* Модальные окна на весь мобильный экран */
+  .modal-box {
+    max-width: 95vw;
+    padding: 16px 14px;
+    max-height: 90vh;
+    overflow-y: auto;
+  }
+}
